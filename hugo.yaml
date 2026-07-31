@@ -1,7 +1,7 @@
 baseURL: "https://zzyIyzz.github.io/blog-abt-zzylyzz/"
 locale: "zh-cn"
 defaultContentLanguage: "zh-cn"
-title: "Shaun's blog"
+title: "Jone Chow's Blog"
 theme: "PaperMod"
 
 languages:
@@ -25,10 +25,10 @@ minify:
 
 params:
   env: "production"
-  title: "Shaun's blog"
-  description: "Shaun's notes on learning, building, and reflection."
+  title: "Jone Chow's Blog"
+  description: "Jone Chow's notes on learning, building, and reflection."
   keywords: ["学习", "博客", "复盘", "笔记"]
-  author: "Shaun"
+  author: "Jone Chow"
   DateFormat: "2006-01-02"
   defaultTheme: "auto"
   disableThemeToggle: false
@@ -44,7 +44,7 @@ params:
   TocOpen: false
 
   homeInfoParams:
-    Title: "Shaun's blog"
+    Title: "Jone Chow's Blog"
     Content: "Notes on learning, building, reflection, and what comes next."
 
 menu:
