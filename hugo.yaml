@@ -17,7 +17,7 @@ buildFuture: false
 buildExpired: false
 
 pagination:
-  pagerSize: 8
+  pagerSize: 20
 
 minify:
   disableXML: true
@@ -30,45 +30,34 @@ params:
   keywords: ["学习", "博客", "复盘", "笔记"]
   author: "Jone Chow"
   DateFormat: "2006-01-02"
-  defaultTheme: "auto"
-  disableThemeToggle: false
+  defaultTheme: "light"
+  disableThemeToggle: true
 
   ShowReadingTime: true
   ShowShareButtons: false
   ShowPostNavLinks: true
-  ShowBreadCrumbs: true
+  ShowBreadCrumbs: false
   ShowCodeCopyButtons: true
   ShowWordCount: true
-  ShowRssButtonInSectionTermList: true
-  ShowToc: true
+  ShowRssButtonInSectionTermList: false
+  ShowToc: false
   TocOpen: false
-
-  homeInfoParams:
-    Title: "Jone Chow's Blog"
-    Content: "Notes on learning, building, reflection, and what comes next."
+  disableSpecial1stPost: true
 
 menu:
   main:
     - identifier: posts
-      name: "文章"
+      name: "Posts"
       url: /posts/
       weight: 10
     - identifier: archives
-      name: "归档"
+      name: "Archive"
       url: /archives/
       weight: 20
-    - identifier: search
-      name: "搜索"
-      url: /search/
-      weight: 30
-    - identifier: tags
-      name: "标签"
-      url: /tags/
-      weight: 40
     - identifier: about
-      name: "关于"
+      name: "About"
       url: /about/
-      weight: 50
+      weight: 30
 
 outputs:
   home:

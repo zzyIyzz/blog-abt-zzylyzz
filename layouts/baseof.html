@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="{{ site.LanguageCode | default "zh-cn" }}" data-theme="{{ site.Params.defaultTheme | default "light" }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ block "title" . }}{{ .Title }} | {{ site.Title }}{{ end }}</title>
+    <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+    {{ with site.Params.keywords }}<meta name="keywords" content="{{ delimit . ", " }}">{{ end }}
+    <meta name="author" content="{{ site.Params.author }}">
+    <link rel="canonical" href="{{ .Permalink }}">
+    {{ range .AlternativeOutputFormats }}
+    <link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+    {{ end }}
+    {{ $styles := resources.Get "css/extended/custom.css" | minify | fingerprint }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <a href="{{ site.BaseURL }}">{{ site.Title }}</a>
+            </div>
+            <ul class="menu__inner">
+                {{ range site.Menus.main }}
+                <li class="menu__item{{ if $.IsMenuCurrent "main" . }} active{{ end }}">
+                    <a href="{{ .URL | relLangURL }}">{{ .Name }}</a>
+                </li>
+                {{ end }}
+            </ul>
+        </nav>
+    </header>
+    <main class="main">
+        {{ block "main" . }}{{ end }}
+    </main>
+    <footer class="footer">
+        <p>&copy; {{ now.Year }} {{ site.Params.author }}. All rights reserved.</p>
+    </footer>
+</body>
+</html>

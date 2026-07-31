@@ -1,0 +1,11 @@
+{{ define "title" }}归档 | {{ site.Title }}{{ end }}
+
+{{ define "main" }}
+<h1 class="page-title">归档</h1>
+{{ range site.RegularPages.ByDate.Reverse }}
+<div class="archive-entry">
+    <a href="{{ .Permalink }}">{{ .Title }}</a>
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+</div>
+{{ end }}
+{{ end }}
