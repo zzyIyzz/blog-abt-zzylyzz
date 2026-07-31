@@ -1,0 +1,36 @@
+{{- if .IsHome }}
+<script type="application/ld+json">
+{{- dict
+  "@context" "https://schema.org"
+  "@type" ((site.Params.schema.publisherType | default "Organization") | title)
+  "name" site.Title
+  "url" site.Home.Permalink
+  "description" (site.Params.description | plainify | truncate 180)
+  | jsonify (dict "indent" "  ")
+  | safeJS
+-}}
+</script>
+{{- else if .IsPage }}
+{{- $keywords := .Params.keywords | default .Params.tags | default (slice) -}}
+{{- $author := .Params.author | default site.Params.author | default site.Title -}}
+<script type="application/ld+json">
+{{- dict
+  "@context" "https://schema.org"
+  "@type" "BlogPosting"
+  "headline" (.Title | plainify)
+  "name" (.Title | plainify)
+  "description" (.Description | default .Summary | plainify)
+  "keywords" $keywords
+  "articleBody" (.Content | htmlUnescape | plainify)
+  "wordCount" .WordCount
+  "inLanguage" (.Language.Lang | default "zh-cn")
+  "datePublished" .PublishDate
+  "dateModified" .Lastmod
+  "author" (dict "@type" "Person" "name" $author)
+  "mainEntityOfPage" (dict "@type" "WebPage" "@id" .Permalink)
+  "publisher" (dict "@type" ((site.Params.schema.publisherType | default "Organization") | title) "name" site.Title)
+  | jsonify (dict "indent" "  ")
+  | safeJS
+-}}
+</script>
+{{- end }}
