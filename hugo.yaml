@@ -54,10 +54,14 @@ menu:
       name: "Archive"
       url: /archives/
       weight: 20
+    - identifier: search
+      name: "Search"
+      url: /search/
+      weight: 30
     - identifier: about
       name: "About"
       url: /about/
-      weight: 30
+      weight: 40
 
 outputs:
   home:

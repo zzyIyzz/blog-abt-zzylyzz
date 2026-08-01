@@ -13,6 +13,11 @@
     {{ end }}
     {{ $styles := resources.Get "css/extended/custom.css" | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $styles.RelPermalink }}">
+    {{/* Code highlighting */}}
+    {{ $highlight := resources.Get "css/includes/chroma-styles.css" }}
+    {{ if $highlight }}
+    <style>{{ $highlight.Content | safeCSS }}</style>
+    {{ end }}
 </head>
 <body>
     <header class="header">
@@ -35,5 +40,50 @@
     <footer class="footer">
         <p>&copy; {{ now.Year }} {{ site.Params.author }}. All rights reserved.</p>
     </footer>
+    {{/* Search JS */}}
+    {{ if eq .Layout "search" }}
+    <script>
+    (function() {
+        const input = document.querySelector('.search-input');
+        const results = document.getElementById('search-results');
+        let index = [];
+        fetch('{{ "index.json" | relLangURL }}')
+            .then(r => r.json())
+            .then(data => { index = data; });
+        if (input) {
+            input.addEventListener('input', function() {
+                const q = this.value.toLowerCase().trim();
+                if (!q) { results.innerHTML = ''; return; }
+                const matches = index.filter(p =>
+                    p.title.toLowerCase().includes(q) ||
+                    p.content.toLowerCase().includes(q)
+                ).slice(0, 10);
+                results.innerHTML = matches.map(p =>
+                    '<article class="post-entry"><div class="entry-header">' +
+                    '<h2><a href="' + p.permalink + '">' + p.title + '</a></h2>' +
+                    '<p style="font-size:13px;color:var(--secondary);margin:4px 0 0">' + p.summary + '</p>' +
+                    '</div></article>'
+                ).join('') || '<p style="color:var(--secondary);padding:20px 0">No results found.</p>';
+            });
+        }
+    })();
+    </script>
+    {{ end }}
+    {{/* Code copy button */}}
+    <script>
+    document.querySelectorAll('pre code').forEach(function(block) {
+        var btn = document.createElement('button');
+        btn.className = 'code-copy-btn';
+        btn.textContent = 'copy';
+        btn.addEventListener('click', function() {
+            navigator.clipboard.writeText(block.textContent).then(function() {
+                btn.textContent = 'copied!';
+                setTimeout(function() { btn.textContent = 'copy'; }, 2000);
+            });
+        });
+        block.parentElement.style.position = 'relative';
+        block.parentElement.appendChild(btn);
+    });
+    </script>
 </body>
 </html>

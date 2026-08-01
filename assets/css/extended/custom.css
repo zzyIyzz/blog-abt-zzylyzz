@@ -425,6 +425,57 @@ body {
     line-height: 1.8;
 }
 
+/* Page title */
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: -0.02em;
+}
+
+/* Code copy button */
+.code-copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--theme);
+    border: 1px solid var(--border);
+    color: var(--secondary);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+pre:hover .code-copy-btn {
+    opacity: 1;
+}
+
+.code-copy-btn:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Search results */
+#search-results {
+    margin-top: 24px;
+}
+
+/* Empty state */
+.main:empty::after {
+    content: "No content yet.";
+    display: block;
+    text-align: center;
+    padding: 80px 0;
+    color: var(--secondary);
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     :root {
