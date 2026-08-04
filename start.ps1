@@ -150,11 +150,29 @@ function Clean-Public {
     }
 }
 
+# ── 启动网页编辑器 ──
+function Start-Editor {
+    $editorPort = 8787
+    $running = $false
+    try {
+        $null = Invoke-WebRequest -Uri "http://localhost:$editorPort/" -UseBasicParsing -TimeoutSec 2
+        $running = $true
+    } catch { $running = $false }
+
+    if (-not $running) {
+        Write-Info "启动网页编辑器 ..."
+        Start-Process -FilePath "python" -ArgumentList "editor_server.py" -WindowStyle Hidden -WorkingDirectory $BlogDir
+        Start-Sleep -Seconds 2
+    }
+    Write-Ok "编辑器地址: http://localhost:$editorPort"
+    Start-Process "http://localhost:$editorPort"
+}
+
 # ── 主菜单 ──
 function Show-Menu {
     Clear-Host
     Write-Host "========================================" -ForegroundColor Magenta
-    Write-Host "   Hugo Blog 管理面板 - Shaun's Blog   " -ForegroundColor Magenta
+    Write-Host "   Hugo Blog 管理面板 - Jone Chow      " -ForegroundColor Magenta
     Write-Host "========================================" -ForegroundColor Magenta
     Write-Host ""
     Write-Host "  [1] 启动开发服务器 (预览)" -ForegroundColor White
@@ -165,6 +183,7 @@ function Show-Menu {
     Write-Host "  [6] Git 提交并推送" -ForegroundColor White
     Write-Host "  [7] 清理 public 目录" -ForegroundColor White
     Write-Host "  [8] 检查 Hugo 安装" -ForegroundColor White
+    Write-Host "  [9] 打开网页编辑器 (写文章)" -ForegroundColor Green
     Write-Host "  [0] 退出" -ForegroundColor White
     Write-Host ""
 }
@@ -187,6 +206,7 @@ while ($true) {
             if (Test-Hugo) { Write-Ok "Hugo 正常" }
             else { Write-Warn "Hugo 未安装"; $install = Read-Host "是否自动安装? (y/n)"; if ($install -eq 'y') { Install-Hugo } }
         }
+        "9" { Start-Editor }
         "0" { Write-Info "再见！"; break }
         default { Write-Warn "无效选项，请重新选择" }
     }
